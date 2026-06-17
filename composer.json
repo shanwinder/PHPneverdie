@@ -1,0 +1,16 @@
+{
+  "name": "phpneverdie/php-mastery-quest",
+  "description": "Phase 1 MVP for PHP Mastery Quest interactive learning platform.",
+  "type": "project",
+  "require": {
+    "php": ">=8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    },
+    "files": [
+      "app/Helpers/helpers.php"
+    ]
+  }
+}

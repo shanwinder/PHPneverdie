@@ -1,0 +1,97 @@
+:root {
+  --pmq-bg: #f6f8fb;
+  --pmq-ink: #172033;
+  --pmq-muted: #647084;
+  --pmq-primary: #355cdb;
+  --pmq-accent: #16a085;
+  --pmq-code-bg: #111827;
+}
+
+body {
+  background: var(--pmq-bg);
+  color: var(--pmq-ink);
+}
+
+.navbar-brand {
+  font-weight: 800;
+}
+
+.app-shell {
+  min-height: calc(100vh - 56px);
+}
+
+.sidebar {
+  background: #ffffff;
+  border-right: 1px solid #e4e8f0;
+}
+
+.sidebar .nav-link {
+  color: var(--pmq-muted);
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  background: #eef3ff;
+  color: var(--pmq-primary);
+}
+
+.metric-card,
+.lesson-card,
+.auth-card {
+  border: 1px solid #e4e8f0;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.04);
+}
+
+.lesson-content {
+  font-size: 1.03rem;
+  line-height: 1.75;
+}
+
+.lesson-content pre,
+pre.code-block {
+  background: var(--pmq-code-bg);
+  color: #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.lesson-content code {
+  color: #d63384;
+}
+
+.lesson-content pre code {
+  color: inherit;
+}
+
+.status-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  display: inline-block;
+  border-radius: 999px;
+}
+
+.status-completed { background: #16a085; }
+.status-in_progress { background: #f59e0b; }
+.status-not_started { background: #cbd5e1; }
+
+.choice-card {
+  border: 1px solid #dfe5ef;
+  border-radius: 8px;
+  padding: 0.85rem;
+}
+
+.choice-card:has(input:checked) {
+  border-color: var(--pmq-primary);
+  background: #eef3ff;
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid #e4e8f0;
+  }
+}
