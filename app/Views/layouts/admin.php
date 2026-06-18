@@ -36,6 +36,11 @@ $error = Session::consumeFlash('error');
         <a class="nav-link" href="<?= e(url('/admin/quizzes')) ?>">Quizzes</a>
         <a class="nav-link" href="<?= e(url('/admin/questions')) ?>">Questions</a>
         <a class="nav-link" href="<?= e(url('/admin/challenges')) ?>">Challenges</a>
+        <a class="nav-link" href="<?= e(url('/admin/runtime-profiles')) ?>">Runtime Profiles</a>
+        <a class="nav-link" href="<?= e(url('/admin/executions')) ?>">Execution Monitor</a>
+        <a class="nav-link" href="<?= e(url('/admin/sql-playgrounds')) ?>">SQL Playgrounds</a>
+        <a class="nav-link" href="<?= e(url('/admin/project-reviews')) ?>">Project Reviews</a>
+        <a class="nav-link" href="<?= e(url('/admin/certificates')) ?>">Certificates</a>
         <a class="nav-link" href="<?= e(url('/admin/badges')) ?>">Badges</a>
         <a class="nav-link" href="<?= e(url('/admin/animations')) ?>">Animations</a>
         <a class="nav-link" href="<?= e(url('/admin/users')) ?>">Users</a>

@@ -1,0 +1,14 @@
+<div class="d-flex flex-wrap justify-content-between gap-2 mb-4"><h1 class="h3 mb-0">Certificates</h1></div>
+<div class="row g-3">
+  <?php foreach ($certificates as $certificate): ?>
+    <div class="col-md-6">
+      <div class="card lesson-card"><div class="card-body">
+        <h2 class="h5"><?= e($certificate['title']) ?></h2>
+        <p class="text-secondary"><?= e($certificate['certificate_number']) ?> · <?= e($certificate['course_title']) ?></p>
+        <a class="btn btn-primary" href="<?= e(url('/certificates/' . $certificate['id'])) ?>">View</a>
+      </div></div>
+    </div>
+  <?php endforeach; ?>
+  <?php if (!$certificates): ?><p class="text-secondary">ยังไม่มี certificate</p><?php endif; ?>
+</div>
+

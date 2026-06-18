@@ -46,8 +46,10 @@ class ChallengeController extends Controller
     {
         $this->requireCsrf();
         $id = Database::insert(
-            'INSERT INTO challenges (lesson_id, title, slug, description, instructions, starter_code, expected_text, expected_output, checking_mode, difficulty, xp_reward, sort_order, is_published, created_at, updated_at)
-             VALUES (:lesson_id, :title, :slug, :description, :instructions, :starter_code, :expected_text, :expected_output, :checking_mode, :difficulty, :xp_reward, :sort_order, :is_published, NOW(), NOW())',
+            'INSERT INTO challenges (lesson_id, title, slug, description, instructions, starter_code, expected_text, expected_output, checking_mode, difficulty, xp_reward, sort_order, is_published,
+                runtime_enabled, runtime_mode, runtime_profile_id, run_button_enabled, submit_runtime_enabled, created_at, updated_at)
+             VALUES (:lesson_id, :title, :slug, :description, :instructions, :starter_code, :expected_text, :expected_output, :checking_mode, :difficulty, :xp_reward, :sort_order, :is_published,
+                :runtime_enabled, :runtime_mode, :runtime_profile_id, :run_button_enabled, :submit_runtime_enabled, NOW(), NOW())',
             $this->data($request)
         );
         $this->syncRules($id, $request);
@@ -60,7 +62,9 @@ class ChallengeController extends Controller
         Database::execute(
             'UPDATE challenges SET lesson_id = :lesson_id, title = :title, slug = :slug, description = :description, instructions = :instructions,
                 starter_code = :starter_code, expected_text = :expected_text, expected_output = :expected_output, checking_mode = :checking_mode,
-                difficulty = :difficulty, xp_reward = :xp_reward, sort_order = :sort_order, is_published = :is_published, updated_at = NOW()
+                difficulty = :difficulty, xp_reward = :xp_reward, sort_order = :sort_order, is_published = :is_published,
+                runtime_enabled = :runtime_enabled, runtime_mode = :runtime_mode, runtime_profile_id = :runtime_profile_id,
+                run_button_enabled = :run_button_enabled, submit_runtime_enabled = :submit_runtime_enabled, updated_at = NOW()
              WHERE id = :id',
             ['id' => $request->params['id']] + $this->data($request)
         );
@@ -106,10 +110,12 @@ class ChallengeController extends Controller
              FROM lessons JOIN modules ON modules.id = lessons.module_id
              ORDER BY modules.sort_order, lessons.sort_order'
         );
+        $runtimeProfiles = Database::select('SELECT id, name FROM runtime_profiles WHERE is_active = 1 ORDER BY name');
         $this->render('admin/challenges/form', [
             'title' => $challenge ? 'Edit Challenge' : 'Create Challenge',
             'challenge' => $challenge,
             'lessons' => $lessons,
+            'runtimeProfiles' => $runtimeProfiles,
         ], 'admin');
     }
 
@@ -131,6 +137,11 @@ class ChallengeController extends Controller
             'xp_reward' => (int) $request->input('xp_reward', 40),
             'sort_order' => (int) $request->input('sort_order', 0),
             'is_published' => $request->boolean('is_published'),
+            'runtime_enabled' => $request->boolean('runtime_enabled'),
+            'runtime_mode' => in_array($request->input('runtime_mode'), ['rule', 'output', 'testcase', 'manual', 'hybrid'], true) ? $request->input('runtime_mode') : 'rule',
+            'runtime_profile_id' => $request->input('runtime_profile_id') !== '' ? (int) $request->input('runtime_profile_id') : null,
+            'run_button_enabled' => $request->boolean('run_button_enabled'),
+            'submit_runtime_enabled' => $request->boolean('submit_runtime_enabled'),
         ];
     }
 

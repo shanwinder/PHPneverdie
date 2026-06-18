@@ -73,6 +73,38 @@ $hints = $challenge ? implode("\n", array_column($challenge['hints'], 'hint_text
         <label class="form-label">Hints (one per line)</label>
         <textarea class="form-control" name="hints" rows="4"><?= e($hints) ?></textarea>
       </div>
+      <div class="col-12"><hr></div>
+      <div class="col-md-3">
+        <label class="form-check mt-4">
+          <input class="form-check-input" type="checkbox" name="runtime_enabled" <?= ($challenge['runtime_enabled'] ?? 0) ? 'checked' : '' ?>>
+          <span class="form-check-label">Runtime enabled</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Runtime Mode</label>
+        <select class="form-select" name="runtime_mode">
+          <?php foreach (['rule', 'output', 'testcase', 'manual', 'hybrid'] as $mode): ?><option value="<?= e($mode) ?>" <?= ($challenge['runtime_mode'] ?? 'rule') === $mode ? 'selected' : '' ?>><?= e($mode) ?></option><?php endforeach; ?>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Runtime Profile</label>
+        <select class="form-select" name="runtime_profile_id">
+          <option value="">Default active profile</option>
+          <?php foreach ($runtimeProfiles as $profile): ?>
+            <option value="<?= e($profile['id']) ?>" <?= (int) ($challenge['runtime_profile_id'] ?? 0) === (int) $profile['id'] ? 'selected' : '' ?>><?= e($profile['name']) ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-check mt-4">
+          <input class="form-check-input" type="checkbox" name="run_button_enabled" <?= ($challenge['run_button_enabled'] ?? 0) ? 'checked' : '' ?>>
+          <span class="form-check-label">Show Run Code</span>
+        </label>
+        <label class="form-check">
+          <input class="form-check-input" type="checkbox" name="submit_runtime_enabled" <?= ($challenge['submit_runtime_enabled'] ?? 0) ? 'checked' : '' ?>>
+          <span class="form-check-label">Submit via runtime</span>
+        </label>
+      </div>
       <div class="col-12">
         <label class="form-check">
           <input class="form-check-input" type="checkbox" name="is_published" <?= ($challenge['is_published'] ?? 1) ? 'checked' : '' ?>>
@@ -83,7 +115,10 @@ $hints = $challenge ? implode("\n", array_column($challenge['hints'], 'hint_text
   </div>
   <div class="card-footer d-flex justify-content-between">
     <?php if ($isEdit): ?>
-      <button class="btn btn-outline-danger" form="deleteChallenge" type="submit">Delete</button>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-danger" form="deleteChallenge" type="submit">Delete</button>
+        <a class="btn btn-outline-primary" href="<?= e(url('/admin/challenges/' . $challenge['id'] . '/test-cases')) ?>">Test Cases</a>
+      </div>
     <?php else: ?><span></span><?php endif; ?>
     <button class="btn btn-primary" type="submit">Save Challenge</button>
   </div>

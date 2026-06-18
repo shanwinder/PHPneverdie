@@ -24,11 +24,22 @@
       <form method="post" action="<?= e(url('/challenges/' . $challenge['id'] . '/submit')) ?>">
         <?= csrf_field() ?>
         <textarea class="form-control code-editor" name="code" rows="18" maxlength="20000" data-starter="<?= e($challenge['starter_code']) ?>" required><?= e(old('code', $challenge['starter_code'])) ?></textarea>
+        <?php if (($challenge['runtime_enabled'] ?? 0) && ($challenge['run_button_enabled'] ?? 0)): ?>
+          <label class="form-label mt-3">Custom input สำหรับ Run Code</label>
+          <textarea class="form-control" name="input_data" rows="3" placeholder="ใส่ input ที่ต้องการส่งเข้า STDIN"><?= e(old('input_data', '')) ?></textarea>
+        <?php endif; ?>
         <div class="d-flex flex-wrap justify-content-between gap-2 mt-3">
           <button class="btn btn-outline-secondary" type="button" data-reset-editor>Reset</button>
           <div class="d-flex gap-2">
             <a class="btn btn-outline-dark" href="<?= e(url('/challenges/' . $challenge['id'] . '/history')) ?>">History</a>
-            <button class="btn btn-success" type="submit">Submit</button>
+            <?php if (($challenge['runtime_enabled'] ?? 0) && ($challenge['run_button_enabled'] ?? 0)): ?>
+              <button class="btn btn-outline-success" type="submit" formaction="<?= e(url('/challenges/' . $challenge['id'] . '/run')) ?>">Run Code</button>
+            <?php endif; ?>
+            <?php if (($challenge['runtime_enabled'] ?? 0) && ($challenge['submit_runtime_enabled'] ?? 0)): ?>
+              <button class="btn btn-success" type="submit" formaction="<?= e(url('/challenges/' . $challenge['id'] . '/submit-runtime')) ?>">Submit for Test</button>
+            <?php else: ?>
+              <button class="btn btn-success" type="submit">Submit</button>
+            <?php endif; ?>
           </div>
         </div>
       </form>

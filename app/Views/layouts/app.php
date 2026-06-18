@@ -26,6 +26,7 @@ $error = Session::consumeFlash('error');
           <li class="nav-item"><a class="nav-link" href="<?= e(url('/dashboard')) ?>">Dashboard</a></li>
           <li class="nav-item"><a class="nav-link" href="<?= e(url('/courses')) ?>">Learning Path</a></li>
           <li class="nav-item"><a class="nav-link" href="<?= e(url('/challenges')) ?>">Challenges</a></li>
+          <li class="nav-item"><a class="nav-link" href="<?= e(url('/sql-playgrounds')) ?>">SQL</a></li>
           <li class="nav-item"><a class="nav-link" href="<?= e(url('/leaderboard')) ?>">Leaderboard</a></li>
           <?php if (user_is_admin()): ?><li class="nav-item"><a class="nav-link" href="<?= e(url('/admin')) ?>">Admin</a></li><?php endif; ?>
         <?php endif; ?>
@@ -53,6 +54,9 @@ $error = Session::consumeFlash('error');
           <a class="nav-link" href="<?= e(url('/dashboard')) ?>">Dashboard</a>
           <a class="nav-link" href="<?= e(url('/courses')) ?>">Learning Path</a>
           <a class="nav-link" href="<?= e(url('/challenges')) ?>">Challenges</a>
+          <a class="nav-link" href="<?= e(url('/sql-playgrounds')) ?>">SQL Playgrounds</a>
+          <a class="nav-link" href="<?= e(url('/projects')) ?>">Projects</a>
+          <a class="nav-link" href="<?= e(url('/certificates')) ?>">Certificates</a>
           <a class="nav-link" href="<?= e(url('/badges')) ?>">My Badges</a>
           <a class="nav-link" href="<?= e(url('/leaderboard')) ?>">Leaderboard</a>
           <a class="nav-link" href="<?= e(url('/dashboard')) ?>#progress">My Progress</a>
