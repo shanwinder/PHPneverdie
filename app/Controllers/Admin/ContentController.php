@@ -303,14 +303,40 @@ class ContentController extends Controller
         $rows = Database::select(
             'SELECT users.name, users.email, users.xp, users.level,
                 COUNT(DISTINCT CASE WHEN lesson_progress.status = "completed" THEN lesson_progress.lesson_id END) AS completed_lessons,
-                COUNT(DISTINCT CASE WHEN quiz_attempts.passed = 1 THEN quiz_attempts.quiz_id END) AS passed_quizzes
+                COUNT(DISTINCT CASE WHEN quiz_attempts.passed = 1 THEN quiz_attempts.quiz_id END) AS passed_quizzes,
+                COUNT(DISTINCT CASE WHEN challenge_submissions.status = "passed" THEN challenge_submissions.challenge_id END) AS passed_challenges,
+                COUNT(DISTINCT user_badges.badge_id) AS badge_count
              FROM users
              LEFT JOIN lesson_progress ON lesson_progress.user_id = users.id
              LEFT JOIN quiz_attempts ON quiz_attempts.user_id = users.id
+             LEFT JOIN challenge_submissions ON challenge_submissions.user_id = users.id
+             LEFT JOIN user_badges ON user_badges.user_id = users.id
              GROUP BY users.id
              ORDER BY users.xp DESC, users.name'
         );
-        $this->render('admin/reports', ['title' => 'Basic Reports', 'rows' => $rows], 'admin');
+        $challengeReports = Database::select(
+            'SELECT challenges.title,
+                COUNT(challenge_submissions.id) AS submissions,
+                SUM(CASE WHEN challenge_submissions.status = "passed" THEN 1 ELSE 0 END) AS passed,
+                ROUND(AVG(challenge_submissions.hints_used), 2) AS avg_hints
+             FROM challenges
+             LEFT JOIN challenge_submissions ON challenge_submissions.challenge_id = challenges.id
+             GROUP BY challenges.id
+             ORDER BY submissions DESC, challenges.sort_order'
+        );
+        $badgeReports = Database::select(
+            'SELECT badges.name, COUNT(user_badges.id) AS awarded
+             FROM badges
+             LEFT JOIN user_badges ON user_badges.badge_id = badges.id
+             GROUP BY badges.id
+             ORDER BY awarded DESC, badges.sort_order'
+        );
+        $this->render('admin/reports', [
+            'title' => 'Basic Reports',
+            'rows' => $rows,
+            'challengeReports' => $challengeReports,
+            'badgeReports' => $badgeReports,
+        ], 'admin');
     }
 
     private function lessonData(Request $request): array

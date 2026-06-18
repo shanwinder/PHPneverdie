@@ -5,6 +5,8 @@
     'Lessons' => $stats['lessons'],
     'Published' => $stats['published_lessons'],
     'Quizzes' => $stats['quizzes'],
+    'Challenges' => $stats['challenges'],
+    'Submissions' => $stats['submissions'],
     'Active 30d' => $stats['active_users'],
     'Avg Progress' => $stats['average_progress'] . '%',
   ] as $label => $value): ?>
@@ -17,9 +19,34 @@
   <?php endforeach; ?>
 </div>
 
-<div class="card lesson-card">
-  <div class="card-body">
-    <h2 class="h5">Recent Quiz Attempts</h2>
+<div class="row g-4">
+  <div class="col-xl-6">
+    <div class="card lesson-card h-100">
+      <div class="card-body">
+        <h2 class="h5">Recent Challenge Submissions</h2>
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead><tr><th>User</th><th>Challenge</th><th>Score</th><th>Status</th><th>Submitted</th></tr></thead>
+            <tbody>
+            <?php foreach ($recentSubmissions as $submission): ?>
+              <tr>
+                <td><?= e($submission['user_name']) ?></td>
+                <td><?= e($submission['challenge_title']) ?></td>
+                <td><?= e($submission['score']) ?>%</td>
+                <td><span class="badge <?= $submission['status'] === 'passed' ? 'text-bg-success' : ($submission['status'] === 'needs_review' ? 'text-bg-info' : 'text-bg-warning') ?>"><?= e($submission['status']) ?></span></td>
+                <td><?= e($submission['submitted_at']) ?></td>
+              </tr>
+            <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="card lesson-card h-100">
+      <div class="card-body">
+        <h2 class="h5">Recent Quiz Attempts</h2>
     <div class="table-responsive">
       <table class="table align-middle">
         <thead><tr><th>User</th><th>Quiz</th><th>Score</th><th>Status</th><th>Submitted</th></tr></thead>
@@ -37,4 +64,6 @@
       </table>
     </div>
   </div>
+</div>
+</div>
 </div>

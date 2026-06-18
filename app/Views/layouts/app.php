@@ -25,6 +25,8 @@ $error = Session::consumeFlash('error');
         <?php if ($user): ?>
           <li class="nav-item"><a class="nav-link" href="<?= e(url('/dashboard')) ?>">Dashboard</a></li>
           <li class="nav-item"><a class="nav-link" href="<?= e(url('/courses')) ?>">Learning Path</a></li>
+          <li class="nav-item"><a class="nav-link" href="<?= e(url('/challenges')) ?>">Challenges</a></li>
+          <li class="nav-item"><a class="nav-link" href="<?= e(url('/leaderboard')) ?>">Leaderboard</a></li>
           <?php if (user_is_admin()): ?><li class="nav-item"><a class="nav-link" href="<?= e(url('/admin')) ?>">Admin</a></li><?php endif; ?>
         <?php endif; ?>
       </ul>
@@ -50,6 +52,9 @@ $error = Session::consumeFlash('error');
         <nav class="nav flex-column gap-1">
           <a class="nav-link" href="<?= e(url('/dashboard')) ?>">Dashboard</a>
           <a class="nav-link" href="<?= e(url('/courses')) ?>">Learning Path</a>
+          <a class="nav-link" href="<?= e(url('/challenges')) ?>">Challenges</a>
+          <a class="nav-link" href="<?= e(url('/badges')) ?>">My Badges</a>
+          <a class="nav-link" href="<?= e(url('/leaderboard')) ?>">Leaderboard</a>
           <a class="nav-link" href="<?= e(url('/dashboard')) ?>#progress">My Progress</a>
           <a class="nav-link" href="<?= e(url('/dashboard')) ?>#profile">Profile</a>
         </nav>
@@ -66,5 +71,7 @@ $error = Session::consumeFlash('error');
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<?= e(url('/assets/js/app.js')) ?>"></script>
+<script src="<?= e(url('/assets/js/challenge-editor.js')) ?>"></script>
+<script src="<?= e(url('/assets/js/animation-blocks.js')) ?>"></script>
 </body>
 </html>

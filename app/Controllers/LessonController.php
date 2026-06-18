@@ -45,6 +45,14 @@ class LessonController extends Controller
         $next = $currentIndex !== false && $currentIndex < count($pathLessons) - 1 ? $pathLessons[$currentIndex + 1] : null;
 
         $quiz = QuizService::quizForLesson((int) $lesson['id']);
+        $challenges = Database::select(
+            'SELECT * FROM challenges WHERE lesson_id = :lesson_id AND is_published = 1 ORDER BY sort_order, id',
+            ['lesson_id' => $lesson['id']]
+        );
+        $animationBlocks = Database::select(
+            'SELECT * FROM lesson_animation_blocks WHERE lesson_id = :lesson_id AND is_published = 1 ORDER BY sort_order, id',
+            ['lesson_id' => $lesson['id']]
+        );
 
         $this->render('lessons/show', [
             'title' => $lesson['title'],
@@ -52,6 +60,8 @@ class LessonController extends Controller
             'prev' => $prev,
             'next' => $next,
             'quiz' => $quiz,
+            'challenges' => $challenges,
+            'animationBlocks' => $animationBlocks,
         ]);
     }
 

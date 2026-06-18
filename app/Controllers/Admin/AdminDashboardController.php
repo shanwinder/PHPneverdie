@@ -17,6 +17,8 @@ class AdminDashboardController extends Controller
             'lessons' => Database::first('SELECT COUNT(*) AS total FROM lessons')['total'] ?? 0,
             'published_lessons' => Database::first('SELECT COUNT(*) AS total FROM lessons WHERE is_published = 1')['total'] ?? 0,
             'quizzes' => Database::first('SELECT COUNT(*) AS total FROM quizzes')['total'] ?? 0,
+            'challenges' => Database::first('SELECT COUNT(*) AS total FROM challenges')['total'] ?? 0,
+            'submissions' => Database::first('SELECT COUNT(*) AS total FROM challenge_submissions')['total'] ?? 0,
             'active_users' => Database::first('SELECT COUNT(*) AS total FROM users WHERE last_login_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)')['total'] ?? 0,
             'average_progress' => Database::first(
                 'SELECT COALESCE(ROUND(AVG(user_progress.percent_complete)), 0) AS total
@@ -38,6 +40,20 @@ class AdminDashboardController extends Controller
              LIMIT 8'
         );
 
-        $this->render('admin/dashboard', ['title' => 'Admin Dashboard', 'stats' => $stats, 'recentAttempts' => $recentAttempts], 'admin');
+        $recentSubmissions = Database::select(
+            'SELECT challenge_submissions.*, users.name AS user_name, challenges.title AS challenge_title
+             FROM challenge_submissions
+             JOIN users ON users.id = challenge_submissions.user_id
+             JOIN challenges ON challenges.id = challenge_submissions.challenge_id
+             ORDER BY challenge_submissions.submitted_at DESC
+             LIMIT 8'
+        );
+
+        $this->render('admin/dashboard', [
+            'title' => 'Admin Dashboard',
+            'stats' => $stats,
+            'recentAttempts' => $recentAttempts,
+            'recentSubmissions' => $recentSubmissions,
+        ], 'admin');
     }
 }

@@ -35,6 +35,9 @@ $error = Session::consumeFlash('error');
         <a class="nav-link" href="<?= e(url('/admin/lessons')) ?>">Lessons</a>
         <a class="nav-link" href="<?= e(url('/admin/quizzes')) ?>">Quizzes</a>
         <a class="nav-link" href="<?= e(url('/admin/questions')) ?>">Questions</a>
+        <a class="nav-link" href="<?= e(url('/admin/challenges')) ?>">Challenges</a>
+        <a class="nav-link" href="<?= e(url('/admin/badges')) ?>">Badges</a>
+        <a class="nav-link" href="<?= e(url('/admin/animations')) ?>">Animations</a>
         <a class="nav-link" href="<?= e(url('/admin/users')) ?>">Users</a>
         <a class="nav-link" href="<?= e(url('/admin/reports')) ?>">Reports</a>
       </nav>

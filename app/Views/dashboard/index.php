@@ -7,23 +7,29 @@
 </div>
 
 <div class="row g-3 mb-4" id="progress">
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="card metric-card h-100"><div class="card-body">
       <div class="text-secondary small">Progress</div>
       <div class="display-6 fw-bold"><?= e($summary['percent']) ?>%</div>
       <div class="progress mt-2"><div class="progress-bar" style="width: <?= e($summary['percent']) ?>%"></div></div>
     </div></div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="card metric-card h-100"><div class="card-body">
       <div class="text-secondary small">Completed Lessons</div>
       <div class="display-6 fw-bold"><?= e($summary['completed_lessons']) ?>/<?= e($summary['total_lessons']) ?></div>
     </div></div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="card metric-card h-100"><div class="card-body">
       <div class="text-secondary small">Passed Quizzes</div>
       <div class="display-6 fw-bold"><?= e($summary['passed_quizzes']) ?></div>
+    </div></div>
+  </div>
+  <div class="col-md-3">
+    <div class="card metric-card h-100"><div class="card-body">
+      <div class="text-secondary small">Passed Challenges</div>
+      <div class="display-6 fw-bold"><?= e($challengeSummary['passed_challenges'] ?? 0) ?>/<?= e($challengeSummary['total_challenges'] ?? 0) ?></div>
     </div></div>
   </div>
 </div>
@@ -44,7 +50,21 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-7">
+  <div class="col-lg-3">
+    <div class="card lesson-card h-100">
+      <div class="card-body">
+        <h2 class="h5">Recommended Challenge</h2>
+        <?php if ($recommendedChallenge): ?>
+          <p class="mb-1 fw-semibold"><?= e($recommendedChallenge['title']) ?></p>
+          <p class="text-secondary small"><?= e($recommendedChallenge['lesson_title']) ?> · <?= e($recommendedChallenge['xp_reward']) ?> XP</p>
+          <a class="btn btn-success" href="<?= e(url('/challenges/' . $recommendedChallenge['slug'])) ?>">ฝึกเขียน code</a>
+        <?php else: ?>
+          <p class="text-secondary mb-0">ผ่าน challenge ที่เผยแพร่ครบแล้ว</p>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
     <div class="card lesson-card">
       <div class="card-body">
         <h2 class="h5">Learning Path</h2>
@@ -60,3 +80,16 @@
     </div>
   </div>
 </div>
+
+<?php if ($latestBadges): ?>
+  <div class="card lesson-card mt-4">
+    <div class="card-body">
+      <h2 class="h5">Latest Badges</h2>
+      <div class="d-flex flex-wrap gap-2">
+        <?php foreach ($latestBadges as $badge): ?>
+          <span class="badge text-bg-light"><?= e($badge['icon'] ?: '*') ?> <?= e($badge['name']) ?></span>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </div>
+<?php endif; ?>

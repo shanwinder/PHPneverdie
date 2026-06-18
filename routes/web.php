@@ -1,11 +1,17 @@
 <?php
 
 use App\Controllers\Admin\AdminDashboardController;
+use App\Controllers\Admin\AnimationBlockController;
+use App\Controllers\Admin\BadgeController as AdminBadgeController;
+use App\Controllers\Admin\ChallengeController as AdminChallengeController;
+use App\Controllers\BadgeController;
+use App\Controllers\ChallengeController;
 use App\Controllers\Admin\ContentController;
 use App\Controllers\AuthController;
 use App\Controllers\CourseController;
 use App\Controllers\DashboardController;
 use App\Controllers\HomeController;
+use App\Controllers\LeaderboardController;
 use App\Controllers\LessonController;
 use App\Controllers\QuizController;
 
@@ -23,6 +29,16 @@ $router->get('/lessons/{slug}', [LessonController::class, 'show'], ['auth']);
 $router->post('/lessons/{id}/start', [LessonController::class, 'start'], ['auth']);
 $router->get('/lessons/{id}/quiz', [QuizController::class, 'show'], ['auth']);
 $router->post('/lessons/{id}/quiz', [QuizController::class, 'submit'], ['auth']);
+$router->get('/lessons/{id}/practice', [ChallengeController::class, 'lessonPractice'], ['auth']);
+
+$router->get('/challenges', [ChallengeController::class, 'index'], ['auth']);
+$router->get('/challenges/{slug}', [ChallengeController::class, 'show'], ['auth']);
+$router->get('/challenges/{slug}/result', [ChallengeController::class, 'result'], ['auth']);
+$router->post('/challenges/{id}/submit', [ChallengeController::class, 'submit'], ['auth']);
+$router->get('/challenges/{id}/history', [ChallengeController::class, 'history'], ['auth']);
+$router->post('/challenges/{id}/hint', [ChallengeController::class, 'hint'], ['auth']);
+$router->get('/badges', [BadgeController::class, 'index'], ['auth']);
+$router->get('/leaderboard', [LeaderboardController::class, 'index'], ['auth']);
 
 $router->get('/admin', [AdminDashboardController::class, 'index'], ['admin']);
 $router->get('/admin/courses', [ContentController::class, 'courses'], ['admin']);
@@ -60,3 +76,23 @@ $router->post('/admin/choices/{id}/delete', [ContentController::class, 'deleteCh
 $router->get('/admin/users', [ContentController::class, 'users'], ['admin']);
 $router->post('/admin/users/{id}', [ContentController::class, 'updateUser'], ['admin']);
 $router->get('/admin/reports', [ContentController::class, 'reports'], ['admin']);
+
+$router->get('/admin/challenges', [AdminChallengeController::class, 'index'], ['admin']);
+$router->get('/admin/challenges/create', [AdminChallengeController::class, 'create'], ['admin']);
+$router->post('/admin/challenges', [AdminChallengeController::class, 'store'], ['admin']);
+$router->get('/admin/challenges/{id}/edit', [AdminChallengeController::class, 'edit'], ['admin']);
+$router->post('/admin/challenges/{id}', [AdminChallengeController::class, 'update'], ['admin']);
+$router->post('/admin/challenges/{id}/delete', [AdminChallengeController::class, 'delete'], ['admin']);
+$router->get('/admin/challenges/{id}/submissions', [AdminChallengeController::class, 'submissions'], ['admin']);
+
+$router->get('/admin/badges', [AdminBadgeController::class, 'index'], ['admin']);
+$router->post('/admin/badges', [AdminBadgeController::class, 'store'], ['admin']);
+$router->get('/admin/badges/{id}/edit', [AdminBadgeController::class, 'edit'], ['admin']);
+$router->post('/admin/badges/{id}', [AdminBadgeController::class, 'update'], ['admin']);
+$router->post('/admin/badges/{id}/delete', [AdminBadgeController::class, 'delete'], ['admin']);
+
+$router->get('/admin/animations', [AnimationBlockController::class, 'index'], ['admin']);
+$router->post('/admin/animations', [AnimationBlockController::class, 'store'], ['admin']);
+$router->get('/admin/animations/{id}/edit', [AnimationBlockController::class, 'edit'], ['admin']);
+$router->post('/admin/animations/{id}', [AnimationBlockController::class, 'update'], ['admin']);
+$router->post('/admin/animations/{id}/delete', [AnimationBlockController::class, 'delete'], ['admin']);

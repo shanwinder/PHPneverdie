@@ -28,6 +28,10 @@ if (config('app.debug')) {
 
 $sessionName = env('SESSION_NAME', 'pmq_session');
 session_name($sessionName);
+$sessionPath = session_save_path();
+if ($sessionPath !== '' && (!is_dir($sessionPath) || !is_writable($sessionPath))) {
+    session_save_path(sys_get_temp_dir());
+}
 session_set_cookie_params([
     'httponly' => true,
     'samesite' => 'Lax',

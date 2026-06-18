@@ -89,9 +89,131 @@ pre.code-block {
   background: #eef3ff;
 }
 
+.challenge-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 1rem;
+  align-items: start;
+}
+
+.challenge-side {
+  position: sticky;
+  top: 1rem;
+}
+
+.code-editor {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  background: #111827;
+  color: #e5e7eb;
+  border-color: #273244;
+  tab-size: 2;
+}
+
+.challenge-instructions {
+  background: #f8fafc;
+  border: 1px solid #e4e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.rule-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.submission-row {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.submission-row:last-child {
+  border-bottom: 0;
+}
+
+.submission-code {
+  max-width: 32rem;
+  max-height: 12rem;
+  font-size: 0.82rem;
+}
+
+.practice-panel,
+.animation-block {
+  border: 1px solid #e4e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 1rem;
+}
+
+.practice-panel {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.animation-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.animation-content {
+  overflow-x: auto;
+}
+
+.animation-steps {
+  display: grid;
+  gap: 0.65rem;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.animation-steps li {
+  border-left: 4px solid var(--pmq-accent);
+  background: #f4fbf9;
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+}
+
+.badge-icon {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #eef3ff;
+  color: var(--pmq-primary);
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.badge-locked {
+  opacity: 0.68;
+}
+
 @media (max-width: 767.98px) {
   .sidebar {
     border-right: 0;
     border-bottom: 1px solid #e4e8f0;
+  }
+
+  .challenge-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .challenge-side {
+    position: static;
+  }
+
+  .practice-panel {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
